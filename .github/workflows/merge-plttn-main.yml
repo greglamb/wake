@@ -6,7 +6,7 @@ on:
 jobs:
   merge:
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/fork/plttn
+    if: github.ref == 'refs/heads/fork/plttn'
 
     steps:
       - name: Checkout fork/plttn
