@@ -1,6 +1,6 @@
 function _fake_tide_cache_variables
     # pwd
-    set_color -o $fake_tide_pwd_color_anchors | read -gx _fake_tide_color_anchors
+    set_color $fake_tide_pwd_color_anchors | read -gx _fake_tide_color_anchors
     set -gx _fake_tide_color_truncated_dirs "$(set_color $fake_tide_pwd_color_truncated_dirs)"
     set -gx _fake_tide_reset_to_color_dirs (set_color normal -b $fake_tide_pwd_bg_color; set_color $fake_tide_pwd_color_dirs)
 

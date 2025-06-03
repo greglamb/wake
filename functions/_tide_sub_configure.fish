@@ -49,7 +49,7 @@ function _tide_title -a text
     set -q _flag_auto && return
 
     command -q clear && clear
-    set_color -o
+    set_color
     string pad --width (math --scale=0 "$fake_columns/2" + (string length $text)/2) $text
     set_color normal
 
@@ -63,7 +63,7 @@ function _tide_option -a symbol text
     if not set -q _flag_auto
         set -g _tide_configure_first_prompt_after_option
 
-        set_color -o
+        set_color
         set -e _tide_configure_first_option_after_title || echo
         echo "($symbol) $text"
         set_color normal
@@ -98,7 +98,7 @@ function _tide_menu -a func
     echo '(q) Quit and do nothing'\n
 
     while read --nchars 1 --prompt-str \
-            "$(set_color -o)Choice [$(string join '/' $_tide_symbol_list $r q)] $(set_color normal)" input
+            "$(set_color)Choice [$(string join '/' $_tide_symbol_list $r q)] $(set_color normal)" input
         switch $input
             case r
                 set -q _flag_no_restart && continue
