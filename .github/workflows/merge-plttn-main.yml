@@ -6,6 +6,9 @@ on:
 jobs:
   merge:
     runs-on: ubuntu-latest
+
+    if: github.ref == 'refs/heads/fork/plttn'
+
     steps:
       - name: Checkout fork/plttn
         uses: actions/checkout@v4
@@ -20,11 +23,10 @@ jobs:
           git remote add upstream https://github.com/plttn/tide.git
           git fetch upstream main
 
-      - name: Merge upstream/main
-        run: |
-          git merge upstream/main --no-ff -m "Merge plttn/tide main into fork/plttn"
+      - name: Merge upstream/main into fork/plttn
+        run: git merge upstream/main --no-ff -m "Merge plttn/tide main into fork/plttn"
 
-      - name: Push merge commit
+      - name: Push result to fork/plttn
         run: git push origin fork/plttn
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
