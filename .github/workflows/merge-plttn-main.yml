@@ -1,0 +1,32 @@
+name: Merge plttn/tide main into fork/plttn
+
+on:
+  workflow_dispatch:
+
+jobs:
+  merge:
+    runs-on: ubuntu-latest
+
+    if: github.ref == 'refs/heads/fork/plttn'
+
+    steps:
+      - name: Checkout fork/plttn
+        uses: actions/checkout@v4
+        with:
+          ref: fork/plttn
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Add or reset upstream remote
+        run: |
+          git remote remove upstream 2>/dev/null || true
+          git remote add upstream https://github.com/plttn/tide.git
+          git fetch upstream main
+
+      - name: Merge upstream/main into fork/plttn
+        run: git merge upstream/main --no-ff -m "Merge plttn/tide main into fork/plttn"
+
+      - name: Push result to fork/plttn
+        run: git push origin fork/plttn
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
