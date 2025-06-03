@@ -6,8 +6,7 @@ on:
 jobs:
   merge:
     runs-on: ubuntu-latest
-
-    if: github.ref == 'refs/heads/fork/plttn'
+    if: github.ref == 'refs/heads/fork/plttn
 
     steps:
       - name: Checkout fork/plttn
@@ -17,10 +16,15 @@ jobs:
           fetch-depth: 0
           token: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Configure Git identity
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
       - name: Add or reset upstream remote
         run: |
           git remote remove upstream 2>/dev/null || true
-          git remote add upstream https://github.com/plttn/tide.git
+          git remote add    upstream https://github.com/plttn/tide.git
           git fetch upstream main
 
       - name: Merge upstream/main into fork/plttn
